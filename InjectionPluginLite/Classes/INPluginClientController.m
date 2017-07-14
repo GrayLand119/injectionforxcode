@@ -1,5 +1,5 @@
 //
-//  $Id: //depot/injectionforxcode/InjectionPluginLite/Classes/INPluginClientController.m#8 $
+//  $Id: //depot/injectionforxcode/InjectionPluginLite/Classes/INPluginClientController.m#9 $
 //  InjectionPluginLite
 //
 //  Created by John Holdsworth on 15/01/2013.
@@ -213,7 +213,9 @@ static NSString *kINUnlockCommand = @"INUnlockCommand", *kINSilent = @"INSilent"
         return;
     }
 
-    status = (storyButton.state ? INJECTION_STORYBOARD : 1) | INJECTION_DEVICEIOS8;
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        status = (storyButton.state ? INJECTION_STORYBOARD : 1) | INJECTION_DEVICEIOS8;
+    });
     write( appConnection, &status, sizeof status );
 
     [BundleInjection readHeader:&header forPath:path from:appConnection];
@@ -235,12 +237,13 @@ static NSString *kINUnlockCommand = @"INUnlockCommand", *kINSilent = @"INSilent"
 
     clientSocket = appConnection;
 
-    for ( NSSlider *slider in [sliders subviews] )
-        [self slid:slider];
-    for ( NSColorWell *well in [wells subviews] )
-        [self colorChanged:well];
-
-    [menuController enableFileWatcher:YES];
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        for ( NSSlider *slider in [sliders subviews] )
+            [self slid:slider];
+        for ( NSColorWell *well in [wells subviews] )
+            [self colorChanged:well];
+        [menuController enableFileWatcher:YES];
+    });
 
     [self performSelectorInBackground:@selector(connectionMonitor) withObject:nil];
 }
@@ -347,7 +350,10 @@ static NSString *kINUnlockCommand = @"INUnlockCommand", *kINSilent = @"INSilent"
 
     INLog( @"Running: %@", command );
     if ( scriptOutput ) {
-        [self performSelector:_cmd withObject:command afterDelay:.5];
+        dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC);
+        dispatch_after(delayTime, dispatch_get_main_queue(), ^{
+            [self exec:command args:args];
+        });
         return;
     }
 
