@@ -350,7 +350,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		BB749D7C16A5F32E006C993B /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
@@ -359,7 +359,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd InjectionLoader && \"$DEVELOPER_BIN_DIR\"/xcodebuild -sdk iphonesimulator -config Debug -arch x86_64 -arch i386 && cd - &&\nchmod +x \"$INSTALL_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"/*.pl &&\ncp -rf Classes/Xtrace.* InjectionLoader/build/*-iphonesimulator/InjectionLoader.bundle \"$INSTALL_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"\n/usr/bin/codesign --force --sign \"-\" --timestamp=none \"$INSTALL_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"/InjectionLoader.bundle &&\n\nSYMROOT=/tmp\ncd XprobeSwift && rm -rf build &&\n\n\"$DEVELOPER_BIN_DIR\"/xcodebuild SYMROOT=$SYMROOT -sdk iphonesimulator -arch x86_64 -arch i386 -config Debug &&\ncp -rf $SYMROOT/Debug-iphonesimulator/XprobeSwift.loader \"$INSTALL_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"/InjectionLoader.bundle";
+			shellScript = "cd InjectionLoader && \"$DEVELOPER_BIN_DIR\"/xcodebuild -sdk iphonesimulator -config Debug -arch x86_64 -arch i386 && cd - &&\nchmod +x \"$INSTALL_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"/*.pl &&\ncp -rf Classes/Xtrace.* InjectionLoader/build/*-iphonesimulator/InjectionLoader.bundle \"$INSTALL_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"\n/usr/bin/codesign --force --sign \"-\" --timestamp=none \"$INSTALL_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"/InjectionLoader.bundle &&\n\nSYMROOT=/tmp\ncd XprobeSwift && rm -rf build &&\n\n\"$DEVELOPER_BIN_DIR\"/xcodebuild SYMROOT=$SYMROOT -sdk iphonesimulator -arch x86_64 -arch i386 -config Debug &&\ncp -rf $SYMROOT/Debug-iphonesimulator/XprobeSwift.loader \"$INSTALL_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"/InjectionLoader.bundle\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
